@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasso, Carta, Forbici</title>
+    <link rel="stylesheet" href="/style2.css">
+</head>
+<body>
+
+<!-- BARRA STATISTICHE -->
+<div class="barra-statistiche">
+    <div class="stat">Partita: <%= numeroPartita %></div>
+    <div class="stat">Punti <%= nomeGiocatore %>: <%= puntiGiocatore %></div>
+    <div class="stat">Punti Utente online: <%= puntiMacchina %></div>
+</div>
+
+<!-- SCHERMO DI GIOCO -->
+<div class="schermo">
+
+    <!-- LATO UTENTE -->
+    <div class="lato utente">
+        <div class="titolo">Scegli il tuo segno <%= nomeGiocatore %></div>
+
+        <div class="scelte">
+            <% const opzioni = ['sasso', 'carta', 'forbici']; %>
+            <% opzioni.forEach(scelta => { %>
+            <div class="box-scelta">
+                <form class="form-scelta" action="/gioco" method="post">
+                    <input type="hidden" name="scelta" value="<%= scelta %>">
+                    <button class="btn-scelta" type="button"
+                         onclick="scegliEParla(this.form, '<%= scelta %>')">
+                    <img src="/<%= scelta %>.png" class="img-scelta">
+                    </button>
+
+
+                </form>
+                <div class="nome"><%= scelta.charAt(0).toUpperCase() + scelta.slice(1) %></div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- LATO MACCHINA -->
+    <div class="lato macchina">
+        <div class="titolo">Scelta utente online</div>
+
+        <div class="scelte">
+            <% opzioni.forEach(scelta => { %>
+            <div class="box-scelta">
+                <img src="/<%= scelta %>.png"
+                    class="img-scelta macchina-img <%= gioco && gioco.computer && gioco.computer.scelta === scelta ? 'scelta-attiva' : '' %>">
+                <div class="nome"><%= scelta.charAt(0).toUpperCase() + scelta.slice(1) %></div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+</div>
+
+<!-- RISULTATI -->
+<% if (gioco && gioco.giocatore && gioco.computer) { %>
+<div class="pannello-risultati">
+    <div class="righe-laterali">
+        <div class="riga-gio">Hai scelto: <%= gioco.giocatore.scelta %></div>
+        <div class="riga-mac">Il l'utente online ha scelto: <%= gioco.computer.scelta %></div>
+    </div>
+
+    <% 
+        let risultato = "Hai perso!";
+        let classeRisultato = "esito-perso";
+
+        if (gioco.giocatore.valore === gioco.computer.valore) {
+            risultato = "Hai pareggiato!";
+            classeRisultato = "esito-pareggio";
+        } else if (
+            (gioco.giocatore.valore === 1 && gioco.computer.valore === 3) ||
+            (gioco.giocatore.valore === 2 && gioco.computer.valore === 1) ||
+            (gioco.giocatore.valore === 3 && gioco.computer.valore === 2)
+        ) {
+            risultato = "Hai vinto!";
+            classeRisultato = "esito-vinto";
+        }
+    %>
+    <div class="esito-final <%= classeRisultato %>"><%= risultato %></div>
+</div>
+<% } %>
+
+<!-- SCRIPT TTS DEFINITIVO -->
+<script>
+/* ============================================================
+   1) L’UTENTE CLICCA → SALVIAMO LA SCELTA PER IL PROSSIMO ROUND
+   ============================================================ */
+function scegliEParla(form, sceltaGiocatore) {
+    // Salva la scelta SOLO per il prossimo caricamento pagina
+    sessionStorage.setItem("sceltaDaLeggere", sceltaGiocatore);
+
+    // Invia subito il form (la pagina si ricarica)
+    form.submit();
+}
+
+
+/* ============================================================
+   2) DOPO IL REFRESH → LEGGIAMO SOLO SE LA SCELTA È COERENTE
+   ============================================================ */
+window.addEventListener("DOMContentLoaded", () => {
+
+    const sceltaSalvata = sessionStorage.getItem("sceltaDaLeggere");
+
+    // Se non c'è una scelta salvata → non parlare
+    if (!sceltaSalvata) return;
+
+    // Prendiamo la scelta mostrata dal server
+    const sceltaMostrataElem = document.querySelector('.riga-gio');
+    if (!sceltaMostrataElem) return;
+
+    const sceltaAttuale = sceltaMostrataElem.innerText.replace("Hai scelto: ", "").trim();
+
+    // Se la scelta del server NON coincide → non leggere (protezione totale)
+    if (sceltaAttuale !== sceltaSalvata) {
+        sessionStorage.removeItem("sceltaDaLeggere");
+        return;
+    }
+
+    // Cancella subito per evitare doppie letture
+    sessionStorage.removeItem("sceltaDaLeggere");
+
+    // Prendi informazioni del computer ed esito
+    const rigaMacchina = document.querySelector('.riga-mac');
+    const esito = document.querySelector('.esito-final');
+
+    let testo = `Hai scelto ${sceltaAttuale}.`;
+    if (rigaMacchina) testo += ` ${rigaMacchina.innerText}.`;
+    if (esito) testo += ` ${esito.innerText}.`;
+
+    // Stop eventuali letture precedenti
+    speechSynthesis.cancel();
+
+    // Avvia la lettura
+    const u = new SpeechSynthesisUtterance(testo);
+    u.lang = "it-IT";
+    u.rate = window.innerWidth <= 768 ? 1.1 : 1.35;
+    u.pitch = 1;
+    speechSynthesis.speak(u);
+});
+
+
+/* ============================================================
+   3) STOP AUTOMATICO DELLA VOCE QUANDO SI CAMBIA PAGINA
+   ============================================================ */
+window.addEventListener("beforeunload", () => {
+    speechSynthesis.cancel();
+});
+
+// Per iPhone/iPad e tab switching
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        speechSynthesis.cancel();
+    }
+});
+
+
+</script>
+
+
+</body>
+</html>

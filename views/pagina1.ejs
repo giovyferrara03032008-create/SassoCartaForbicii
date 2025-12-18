@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasso, Carta, Forbici</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="contenitore">
+
+        <!-- Intestazione -->
+        <div class="intestazione">
+            <div class="titolo-gioco">Sasso, Carta, Forbici</div>
+        </div>
+
+        <!-- Introduzione -->
+        <div class="introduzione">
+            <div class="testo-introduzione">
+                Lo scopo del gioco è sconfiggere l'avversario scegliendo un segno che possa battere quello dell'altro, secondo le regole seguenti:
+            </div>
+        </div>
+
+        <!-- Regole del gioco -->
+        <div class="regole">
+            <div class="regola">• Il sasso spezza le forbici (vince il sasso)</div>
+            <div class="regola">• Le forbici tagliano la carta (vincono le forbici)</div>
+            <div class="regola">• La carta avvolge il sasso (vince la carta)</div>
+            <div class="regola">• Se i due giocatori scelgono la stessa arma, il gioco è pari e si gioca di nuovo</div>
+        </div>
+
+        <!-- Form per inserire il nome e iniziare -->
+        <div class="bottone-gioca-di-nuovo">
+            <form action="/gioco" method="post" class="form-gioco">
+                <input type="text" name="nome" placeholder="Inserisci il tuo nome" required class="input-giocatore">
+                <button type="submit" class="bottone-gioca">Gioca online</button>
+            </form>
+        </div>
+
+    </div>
+
+   <audio id="introAudio" src="/intro.mp3" preload="auto" loop></audio>
+
+<script>
+const introAudio = document.getElementById('introAudio');
+let audioPlayed = false;
+
+function playAudio() {
+    if (audioPlayed) return;
+    introAudio.play().catch(()=>{});
+    audioPlayed = true;
+}
+
+// ascolta il primo click o touch
+document.addEventListener('click', playAudio, { once: true });
+document.addEventListener('touchstart', playAudio, { once: true });
+
+// stop automatico quando la pagina viene chiusa o cambia tab
+window.addEventListener('beforeunload', () => {
+    introAudio.pause();
+    introAudio.currentTime = 0;
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) introAudio.pause();
+});
+</script>
+
+
+</body>
+</html>

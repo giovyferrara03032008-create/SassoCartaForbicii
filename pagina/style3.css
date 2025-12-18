@@ -1,0 +1,213 @@
+/* =============================
+   MEDIEVALE — FINE PARTITA
+   Stile FANTASY / PERGAMENA
+   ============================= */
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+/* ===== SFONDO PERGAMENA ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "MedievalSharp", serif;
+    color: #3b220f;
+    background: radial-gradient(circle at center, #f3e4c2 0%, #b08b57 95%);
+    overflow-x: hidden;
+}
+
+/* Luce di torce */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle, rgba(255,210,140,0.35), transparent 60%),
+        radial-gradient(circle, rgba(120,70,30,0.2), transparent 70%);
+    filter: blur(70px);
+    animation: torce 18s infinite alternate ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes torce {
+    0% { transform: scale(1) translate(0,0); }
+    50% { transform: scale(1.1) translate(-30px,20px); }
+    100% { transform: scale(1) translate(30px,-20px); }
+}
+
+/* ===== CONTENITORE FINE ===== */
+.contenitore-fine {
+    width: 65%;
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 50px;
+    background: rgba(255,240,200,0.9);
+    border: 4px solid #6a3f16;
+    border-radius: 25px;
+    box-shadow:
+        0 0 40px rgba(120,70,20,0.7),
+        inset 0 0 25px rgba(255,220,150,0.7);
+    animation: contFinePulse 6s infinite alternate ease-in-out;
+    text-align: center;
+}
+
+@keyframes contFinePulse {
+    0% { box-shadow: 0 0 25px rgba(120,70,20,0.6); }
+    100% { box-shadow: 0 0 55px rgba(180,120,50,0.9); }
+}
+
+/* ===== STATISTICHE ===== */
+.stat {
+    font-size: 1.5rem;
+    color: #4a2a12;
+    margin: 10px 0;
+    text-shadow: 1px 1px 0 #f1d9a5;
+}
+
+/* ===== MESSAGGIO FINALE ===== */
+.messaggio {
+    font-size: 2.2rem;
+    margin: 30px 0;
+    color: #5a2e0c;
+    text-shadow:
+        2px 2px 0 #f2d8a0,
+        0 0 20px rgba(160,110,40,0.6);
+    animation: tremolioMessaggio 3s infinite alternate;
+}
+
+.messaggio img {
+    margin-top: 20px;
+    max-width: 250px;
+    border-radius: 15px;
+    box-shadow:
+        0 0 20px rgba(120,70,20,0.6),
+        inset 0 0 10px rgba(255,220,150,0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.messaggio img:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 35px rgba(160,110,40,0.9),
+        inset 0 0 15px rgba(255,230,170,0.7);
+}
+
+@keyframes tremolioMessaggio {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(1px,0); }
+    50% { transform: translate(-1px,1px); }
+    75% { transform: translate(0,-1px); }
+    100% { transform: translate(0,0); }
+}
+
+/* ===== SALUTO ===== */
+.saluto {
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    color: #6a3f16;
+    text-shadow: 1px 1px 0 #f1d9a5;
+    animation: salutoGlow 4s infinite alternate ease-in-out;
+}
+
+@keyframes salutoGlow {
+    0% { text-shadow: 1px 1px 0 #f1d9a5; }
+    50% { text-shadow: 0 0 20px rgba(160,110,40,0.8); }
+    100% { text-shadow: 1px 1px 0 #f1d9a5; }
+}
+
+/* ===== BOTTONE GIOCA DI NUOVO ===== */
+.bottone-gioca-di-nuovo {
+    margin: 20px 0;
+}
+
+.bottone {
+    padding: 15px 40px;
+    font-size: 1.3rem;
+    border: 3px solid #6a3f16;
+    border-radius: 12px;
+    background: linear-gradient(#c89b5a, #8b5a2b);
+    color: #2b1608;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 #f1d9a5;
+    box-shadow: 0 0 20px rgba(120,70,20,0.6);
+    transition: 0.3s ease, transform 0.3s ease;
+    letter-spacing: 2px;
+}
+
+.bottone:hover {
+    background: linear-gradient(#e1b874, #a36a2c);
+    box-shadow:
+        0 0 35px rgba(160,110,40,0.9),
+        inset 0 0 15px rgba(255,220,160,0.7);
+    transform: scale(1.1);
+}
+
+/* ===== PANNELLO RISULTATI ===== */
+.pannello-risultati {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 80%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background: rgba(255,235,195,0.9);
+    border: 4px solid #6a3f16;
+    border-radius: 20px;
+    box-shadow:
+        0 0 35px rgba(120,70,20,0.7),
+        inset 0 0 20px rgba(255,220,150,0.7);
+    position: relative;
+}
+
+/* Hai scelto */
+.riga-ris:first-child {
+    text-align: left;
+    flex: 1;
+    padding-left: 10px;
+}
+
+/* La macchina ha scelto */
+.riga-ris:nth-child(2) {
+    text-align: right;
+    flex: 1;
+    padding-right: 10px;
+}
+
+/* ESITO FINALE */
+.esito-final {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 2.2rem;
+    color: #5a2e0c;
+    text-shadow:
+        0 0 25px rgba(160,110,40,0.8);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .contenitore-fine {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .messaggio {
+        font-size: 1.6rem;
+    }
+
+    .stat {
+        font-size: 1.2rem;
+    }
+
+    .messaggio img {
+        max-width: 180px;
+    }
+
+    .bottone {
+        width: 80%;
+        font-size: 1.1rem;
+        padding: 12px 25px;
+    }
+}

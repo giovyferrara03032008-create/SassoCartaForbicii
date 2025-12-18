@@ -1,0 +1,238 @@
+/* ====== FONT MEDIEVALE ====== */
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+/* ====== EFFETTI GLOBALI ====== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "MedievalSharp", serif;
+    color: #3b220f;
+    background: radial-gradient(circle at center, #f3e4c2 0%, #b08b57 100%);
+    overflow-x: hidden;
+    text-shadow: 1px 1px 0 #f1d9a5;
+}
+
+/* === Effetto pergamena / luce di torce === */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle, rgba(255,210,130,0.35), transparent 60%),
+        radial-gradient(circle, rgba(120,70,30,0.2), transparent 70%);
+    filter: blur(70px);
+    animation: torce 18s infinite alternate ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes torce {
+    0% { transform: scale(1) translate(0,0); }
+    50% { transform: scale(1.1) translate(-30px,20px); }
+    100% { transform: scale(1) translate(30px,-20px); }
+}
+
+/* === Tremolio antico (al posto del glitch) === */
+@keyframes tremolio {
+    0% { transform: translate(0); }
+    25% { transform: translate(1px, 0); }
+    50% { transform: translate(-1px, 1px); }
+    75% { transform: translate(0, -1px); }
+    100% { transform: translate(0); }
+}
+
+/* === Bagliore fuoco/oro === */
+@keyframes bagliore {
+    0% { filter: drop-shadow(0 0 6px #c48a3a); }
+    50% { filter: drop-shadow(0 0 18px #e0b25c); }
+    100% { filter: drop-shadow(0 0 6px #c48a3a); }
+}
+
+/* ====== BARRA STATISTICHE ====== */
+.barra-statistiche {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0;
+    margin-top: 35px;
+    background: rgba(120,70,20,0.25);
+    border-bottom: 4px solid #6a3f16;
+    box-shadow: inset 0 0 20px rgba(255,220,150,0.5);
+    animation: tremolio 6s infinite;
+}
+
+.stat {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+
+/* ====== SCHERMO ====== */
+.schermo {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+/* ====== CONTENITORI (PANNELLI DI LEGNO/FERRO) ====== */
+.lato {
+    width: 45%;
+    padding: 25px;
+    border: 4px solid #6a3f16;
+    border-radius: 18px;
+    background: rgba(255,240,200,0.85);
+    box-shadow:
+        0 0 30px rgba(120,70,20,0.6),
+        inset 0 0 20px rgba(255,220,150,0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effetto luce che scorre (fiamma) */
+.lato::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255,190,90,0.25) 50%,
+        transparent 100%
+    );
+    animation: torce 6s infinite linear;
+    pointer-events: none;
+}
+
+.titolo {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #5a2e0c;
+    text-shadow: 2px 2px 0 #f2d8a0;
+}
+
+/* ====== SCELTE ====== */
+.scelte {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.box-scelta {
+    text-align: center;
+    padding: 10px;
+    transition: 0.35s ease;
+}
+
+/* Hover: enfasi epica */
+.box-scelta:hover {
+    transform: scale(1.18) rotate(-2deg);
+    filter: brightness(1.2);
+}
+
+/* Pulsante */
+.btn-scelta {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Immagini */
+.img-scelta {
+    width: 130px;
+    height: 130px;
+    filter: drop-shadow(0 0 12px #8b5a2b);
+    transition: 0.25s ease;
+    animation: bagliore 3.5s infinite;
+}
+
+.btn-scelta:hover .img-scelta {
+    filter: drop-shadow(0 0 25px #c48a3a) brightness(1.4);
+}
+
+/* Nome */
+.nome {
+    margin-top: 12px;
+    font-size: 1.4rem;
+    color: #4a2a12;
+    text-shadow: 1px 1px 0 #f1d9a5;
+}
+
+/* ====== SCELTA ATTIVA MACCHINA ====== */
+.scelta-attiva {
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 30px #b87333) brightness(1.4);
+}
+
+/* ===== PANNELLO RISULTATI ===== */
+.pannello-risultati {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 25px auto;
+    width: 80%;
+    max-width: 900px;
+    background: rgba(255,235,195,0.9);
+    border-radius: 20px;
+    border: 4px solid #6a3f16;
+    box-shadow:
+        0 0 35px rgba(120,70,20,0.7),
+        inset 0 0 20px rgba(255,220,150,0.7);
+    font-size: 1.4rem;
+}
+
+.righe-laterali {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.riga-gio { text-align: left; }
+.riga-mac { text-align: right; }
+
+/* ====== ESITO FINALE ====== */
+.esito-final {
+    text-align: center;
+    font-size: 2.6rem;
+    margin-top: 25px;
+    font-weight: bold;
+    animation: tremolio 3s infinite;
+}
+
+/* ===== COLORI DINAMICI ===== */
+.esito-vinto {
+    color: #1f6b2a;
+    text-shadow: 0 0 25px rgba(40,140,60,0.8);
+}
+
+.esito-perso {
+    color: #7a1f1f;
+    text-shadow: 0 0 25px rgba(150,40,40,0.8);
+}
+
+.esito-pareggio {
+    color: #3b2a1a;
+    text-shadow: 0 0 20px rgba(80,60,40,0.6);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .schermo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lato {
+        width: 85%;
+        margin-bottom: 40px;
+    }
+
+    .img-scelta {
+        width: 100px;
+        height: 100px;
+    }
+
+    .barra-statistiche {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 0;
+    }
+}

@@ -1,0 +1,177 @@
+/* =============================
+   MEDIEVALE — SASSO, CARTA, FORBICI
+   Stile FANTASY / PERGAMENA
+   ============================= */
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+/* ===== SFONDO PERGAMENA ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "MedievalSharp", serif;
+    color: #3b2a1a;
+    background: radial-gradient(circle at center, #f3e5c0 0%, #c9ad7a 90%);
+    overflow-x: hidden;
+}
+
+/* Effetto luce di candela */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle, rgba(255,220,150,0.25), transparent 60%),
+        radial-gradient(circle, rgba(120,70,20,0.15), transparent 70%);
+    filter: blur(60px);
+    animation: candela 18s infinite alternate ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes candela {
+    0% { transform: scale(1) translate(0,0); }
+    50% { transform: scale(1.1) translate(-30px,20px); }
+    100% { transform: scale(1) translate(30px,-20px); }
+}
+
+/* ===== CONTENITORE PRINCIPALE ===== */
+.contenitore {
+    width: 70%;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    background: rgba(255,245,220,0.85);
+    border: 4px solid #7a4a1a;
+    border-radius: 20px;
+    box-shadow:
+        0 0 30px rgba(90,50,20,0.6),
+        inset 0 0 20px rgba(255,230,180,0.7);
+}
+
+/* ===== INTESTAZIONE ===== */
+.intestazione {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titolo-gioco {
+    font-size: 3rem;
+    color: #5a2e0c;
+    text-shadow:
+        2px 2px 0 #e6c98a,
+        0 0 15px rgba(120,70,20,0.6);
+    animation: titoloMedievale 4s infinite alternate;
+}
+
+@keyframes titoloMedievale {
+    0% {
+        text-shadow: 2px 2px 0 #e6c98a, 0 0 10px rgba(120,70,20,0.4);
+    }
+    100% {
+        text-shadow: 3px 3px 0 #f2d9a0, 0 0 25px rgba(120,70,20,0.8);
+    }
+}
+
+/* ===== INTRODUZIONE ===== */
+.introduzione {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.testo-introduzione {
+    font-size: 1.3rem;
+    color: #4a2a12;
+    text-shadow: 1px 1px 0 #f0dca8;
+}
+
+/* ===== REGOLE ===== */
+.regole {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.regola {
+    font-size: 1.2rem;
+    color: #3b220f;
+    margin: 6px 0;
+    text-shadow: 1px 1px 0 #ecd39a;
+}
+
+/* ===== FORM ===== */
+.form-gioco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* ===== INPUT NOME ===== */
+.input-giocatore {
+    width: 300px;
+    max-width: 90%;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    color: #3b220f;
+    background: rgba(255,240,200,0.9);
+    border: 3px solid #7a4a1a;
+    border-radius: 12px;
+    text-align: center;
+    letter-spacing: 1px;
+    box-shadow:
+        inset 0 0 10px rgba(140,90,30,0.4),
+        0 0 10px rgba(90,50,20,0.4);
+    transition: all 0.3s ease;
+}
+
+.input-giocatore::placeholder {
+    color: #7a4a1a;
+    letter-spacing: 2px;
+}
+
+.input-giocatore:focus {
+    outline: none;
+    border-color: #a36a2c;
+    background: #fff2c9;
+    box-shadow:
+        inset 0 0 15px rgba(140,90,30,0.6),
+        0 0 20px rgba(120,70,20,0.7);
+    transform: scale(1.03);
+}
+
+/* ===== PULSANTE GIOCA ===== */
+.bottone-gioca {
+    padding: 15px 40px;
+    font-size: 1.3rem;
+    border: 3px solid #7a4a1a;
+    border-radius: 10px;
+    background: linear-gradient(#c89b5a, #8b5a2b);
+    color: #2b1608;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 #f1dca3;
+    box-shadow: 0 0 15px rgba(90,50,20,0.6);
+    transition: 0.3s ease, transform 0.3s ease;
+    letter-spacing: 2px;
+}
+
+.bottone-gioca:hover {
+    background: linear-gradient(#e1b874, #a36a2c);
+    box-shadow:
+        0 0 25px rgba(120,70,20,0.8),
+        inset 0 0 10px rgba(255,220,160,0.7);
+    transform: scale(1.1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .input-giocatore {
+        width: 90%;
+        font-size: 1.1rem;
+    }
+
+    .bottone-gioca {
+        width: 80%;
+        font-size: 1.1rem;
+        padding: 12px 25px;
+    }
+}

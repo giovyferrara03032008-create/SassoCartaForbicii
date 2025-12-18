@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fine Partita</title>
+    <link rel="stylesheet" href="/style3.css">
+</head>
+
+<body>
+
+    <!-- AUDIO DINAMICO CORRETTO -->
+    <audio id="audioFinale" src="/<%= audioFile %>"></audio>
+
+    <div class="contenitore-fine">
+
+        <div class="stat">Vittorie  <%=nomeGiocatore%>: <%= vittoriaGiocatore %></div>
+        <div class="stat">Vittorie utenti online: <%= vittoriaMacchina %></div>
+
+        <div class="messaggio">
+            <% if (puntiGiocatore === 3) { %>
+                <p>Complimenti <%= nomeGiocatore %>! Hai raggiunto per primo 3 punti!!</p>
+                <img src="/vittoria.png" width="200">
+            <% } else { %>
+                <p>Mi dispiace <%= nomeGiocatore %>, l'utente online ha raggiunto per prima 3 punti... Riprova!</p>
+                <img src="/perdita.png">
+            <% } %>
+        </div>
+
+        <div class="saluto">Arrivederci</div>
+
+        <div class="bottone-gioca-di-nuovo">
+            <form action="/pagina2" method="get">
+                <button type="submit" class="bottone">
+                    Clicca per giocare un altro Round online
+                </button>
+            </form>
+        </div>
+
+        <div class="bottone-gioca-di-nuovo">
+            <form action="/" method="get">
+                <button type="submit" class="bottone">
+                    Clicca Qui per tornare alla Home
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT PER RIPRODURRE L’AUDIO -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const audio = document.getElementById("audioFinale");
+            audio.play().catch(err => console.log("Autoplay bloccato:", err));
+        });
+    </script>
+
+</body>
+</html>
